@@ -101,6 +101,69 @@
     .section-title span { color: var(--gold); font-size: 12px; letter-spacing: .3em; }
     h2 { margin: 6px 0 0; color: var(--rose-dark); font-size: clamp(30px, 5vw, 46px); font-weight: 500; }
 
+    .photo-story { padding-top: 54px; }
+    .story-intro { text-align: center; margin-bottom: 26px; color: var(--muted); font-size: 14px; letter-spacing: .08em; }
+    .story-deck { max-width: 720px; min-height: min(76svh, 760px); margin: auto; }
+    .story-card {
+      display: none;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
+      animation: cardIn .65s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .story-card.active { display: block; }
+    .photo-frame {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      max-height: 66svh;
+      overflow: hidden;
+      border: 10px solid var(--paper);
+      border-bottom-width: 34px;
+      border-radius: 5px;
+      background: linear-gradient(145deg, #e8c8c5, #b47a83);
+      box-shadow: var(--shadow);
+    }
+    .story-card:nth-child(2) .photo-frame { background: linear-gradient(145deg, #ead8b9, #b98b67); }
+    .story-card:nth-child(3) .photo-frame { background: linear-gradient(145deg, #d7cadf, #8d748f); }
+    .story-card:nth-child(4) .photo-frame { background: linear-gradient(145deg, #cadad5, #718f89); }
+    .story-card:nth-child(5) .photo-frame { background: linear-gradient(145deg, #e7cbd5, #a56f7e); }
+    .story-card:nth-child(6) .photo-frame { background: linear-gradient(145deg, #ead7c6, #9b7662); }
+    .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .photo-frame.missing::after {
+      content: "PHOTO " attr(data-number) "\A等待放入你们的照片";
+      white-space: pre;
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: rgba(255,255,255,.86);
+      font-size: clamp(16px, 3vw, 22px);
+      letter-spacing: .16em;
+      line-height: 2;
+    }
+    .story-caption {
+      max-width: 590px;
+      margin: 24px auto 0;
+      text-align: center;
+      color: var(--rose-dark);
+      font-size: clamp(18px, 3vw, 23px);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: .5s ease;
+    }
+    .story-card.caption-visible .story-caption { opacity: 1; transform: none; }
+    .story-hint { display: block; margin-top: 12px; color: var(--muted); font-size: 12px; letter-spacing: .14em; }
+    .story-progress { text-align: center; margin-top: 20px; color: var(--gold); font-size: 13px; letter-spacing: .18em; }
+    .story-deck.completed { min-height: auto; display: grid; gap: 82px; }
+    .story-deck.completed .story-card { display: block; cursor: default; }
+    .story-deck.completed .story-caption { opacity: 1; transform: none; }
+    .story-deck.completed .story-hint, .story-deck.completed + .story-progress { display: none; }
+
     .timeline { position: relative; max-width: 720px; margin: auto; }
     .timeline::before { content: ""; position: absolute; left: 18px; top: 10px; bottom: 10px; width: 1px; background: rgba(163, 76, 92, .25); }
     .moment { position: relative; padding: 0 0 48px 64px; }
@@ -231,6 +294,7 @@
       82% { transform: translate(-8vw,5vh) rotate(7deg); }
     }
     @keyframes note { to { transform: translateY(-16px); opacity: 0; } }
+    @keyframes cardIn { from { opacity: 0; transform: translateY(22px) scale(.985); } }
     @media (max-width: 720px) {
       section { padding: 68px 0; }
       .reasons { grid-template-columns: 1fr; }
@@ -269,22 +333,18 @@
   </header>
 
   <main id="content">
-    <section>
-      <div class="section-title reveal"><span>OUR STORY</span><h2>关于我们的几个瞬间</h2></div>
-      <div class="timeline">
-        <article class="moment reveal"><div class="date">初次见面</div><h3>故事从那一天开始</h3><p>那时的我还不知道，眼前这个笑起来很好看的人，会慢慢成为我生活里最特别的存在。</p></article>
-        <article class="moment reveal"><div class="date">慢慢靠近</div><h3>平凡日子有了期待</h3><p>从分享一日三餐，到互道晚安。原来真正的心动，不只有轰轰烈烈，也藏在每一次想起你时。</p></article>
-        <article class="moment reveal"><div class="date">直到现在</div><h3>谢谢你来到我的身边</h3><p>我们见过彼此开心的样子，也陪过彼此疲惫的时刻。谢谢你，让“我们”成为一件真实又美好的事。</p></article>
+    <section class="photo-story" id="photoStory">
+      <div class="section-title"><span>OUR ALBUM</span><h2>一些想和你收藏的瞬间</h2></div>
+      <p class="story-intro">轻轻点击照片，让回忆一张一张展开</p>
+      <div class="story-deck" id="storyDeck">
+        <button class="story-card" type="button"><div class="photo-frame" data-number="01"><img src="photos/photo-1.jpg" alt="我们的第一张照片" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">故事开始以后，普通的日子也有了值得期待的理由。<span class="story-hint">再点一下，去往下一张</span></p></button>
+        <button class="story-card" type="button"><div class="photo-frame" data-number="02"><img src="photos/photo-2.jpg" alt="我们的第二张照片" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">我喜欢的从来不只是某个瞬间，而是每一个有你在的瞬间。<span class="story-hint">再点一下，去往下一张</span></p></button>
+        <button class="story-card" type="button"><div class="photo-frame" data-number="03"><img src="photos/photo-3.jpg" alt="我们的第三张照片" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">谢谢你愿意陪我，把平淡的小事慢慢变成珍贵的回忆。<span class="story-hint">再点一下，去往下一张</span></p></button>
+        <button class="story-card" type="button"><div class="photo-frame" data-number="04"><img src="photos/photo-4.jpg" alt="我们的第四张照片" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">和你并肩走过的路，回头看时，每一步都闪着光。<span class="story-hint">再点一下，去往下一张</span></p></button>
+        <button class="story-card" type="button"><div class="photo-frame" data-number="05"><img src="photos/photo-5.jpg" alt="我们的第五张照片" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">你让我明白，安心就是知道有人始终站在自己这一边。<span class="story-hint">再点一下，去往下一张</span></p></button>
+        <button class="story-card" type="button"><div class="photo-frame" data-number="06"><img src="photos/photo-6.jpg" alt="我们的第六张照片" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">以后还要一起拍很多照片，也一起创造更多没有拍下来的幸福。<span class="story-hint">再点一下，读写给你的信</span></p></button>
       </div>
-    </section>
-
-    <section>
-      <div class="section-title reveal"><span>WHY YOU</span><h2>我喜欢你的理由</h2></div>
-      <div class="reasons">
-        <article class="reason reveal"><div class="number">01</div><h3>你的温柔有迹可循</h3><p>你会记得我随口提起的小事，也会在我不说话的时候，安静地陪在身边。</p></article>
-        <article class="reason reveal"><div class="number">02</div><h3>和你在一起很安心</h3><p>在你面前，我不必总是表现得完美。真实的我，也能被你好好地接住。</p></article>
-        <article class="reason reveal"><div class="number">03</div><h3>你让生活闪闪发光</h3><p>哪怕只是散步、吃饭、分享一件小事，因为身边是你，普通的一天也值得收藏。</p></article>
-      </div>
+      <div class="story-progress" id="storyProgress">照片 1 / 6 · 点击照片显示文字</div>
     </section>
 
     <section id="letterSection">
@@ -303,13 +363,6 @@
       </div>
     </section>
 
-    <section>
-      <div class="section-title reveal"><span>ONE MORE THING</span><h2>送你一张未来兑换券</h2></div>
-      <div class="coupon reveal">
-        <div><h3>一次由你决定的约会</h3><p>时间、地点和内容都由你选。有效期：永远。</p></div>
-        <div class="stamp">专属兑换<br>随时有效</div>
-      </div>
-    </section>
   </main>
 
   <footer>
@@ -376,11 +429,39 @@
 
     document.querySelector("#openButton").addEventListener("click", () => {
       document.body.classList.add("opened");
-      document.querySelector("#content").scrollIntoView({ behavior: "smooth" });
+      storyCards[0].classList.add("active");
+      document.querySelector("#photoStory").scrollIntoView({ behavior: "smooth" });
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         for (let i = 0; i < 18; i++) setTimeout(createPetal, i * 90);
       }
     });
+
+    const storyDeck = document.querySelector("#storyDeck");
+    const storyCards = [...document.querySelectorAll(".story-card")];
+    const storyProgress = document.querySelector("#storyProgress");
+    let storyIndex = 0;
+    let captionVisible = false;
+    storyCards.forEach((card, cardIndex) => card.addEventListener("click", () => {
+      if (storyDeck.classList.contains("completed") || cardIndex !== storyIndex) return;
+      if (!captionVisible) {
+        card.classList.add("caption-visible");
+        captionVisible = true;
+        storyProgress.textContent = `照片 ${storyIndex + 1} / ${storyCards.length} · 再点一下继续`;
+        return;
+      }
+      card.classList.remove("active", "caption-visible");
+      storyIndex += 1;
+      captionVisible = false;
+      if (storyIndex < storyCards.length) {
+        storyCards[storyIndex].classList.add("active");
+        storyProgress.textContent = `照片 ${storyIndex + 1} / ${storyCards.length} · 点击照片显示文字`;
+        storyCards[storyIndex].scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        storyDeck.classList.add("completed");
+        storyCards.forEach(item => { item.classList.add("caption-visible"); item.tabIndex = -1; });
+        setTimeout(() => letterSection.scrollIntoView({ behavior: "smooth", block: "start" }), 350);
+      }
+    }));
 
     function createPetal() {
       const petal = document.createElement("span");
