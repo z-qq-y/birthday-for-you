@@ -7,14 +7,14 @@
   <title>给最特别的你</title>
   <style>
     :root {
-      --paper: #fffaf6;
-      --cream: #f7eee8;
-      --rose: #a34c5c;
-      --rose-dark: #71343f;
-      --ink: #3f3532;
-      --muted: #7d6f69;
-      --gold: #c59b68;
-      --shadow: 0 20px 60px rgba(92, 56, 48, .13);
+      --paper: #fff8fb;
+      --cream: #ffeef5;
+      --rose: #d85f8b;
+      --rose-dark: #8d365d;
+      --ink: #503744;
+      --muted: #8f7180;
+      --gold: #d89ab2;
+      --shadow: 0 20px 60px rgba(183, 73, 119, .16);
     }
 
     * { box-sizing: border-box; }
@@ -23,8 +23,9 @@
       margin: 0;
       color: var(--ink);
       background:
-        radial-gradient(circle at 8% 3%, rgba(194, 133, 143, .16), transparent 28rem),
-        radial-gradient(circle at 95% 48%, rgba(217, 186, 145, .18), transparent 30rem),
+        radial-gradient(circle at 8% 3%, rgba(255, 160, 197, .28), transparent 28rem),
+        radial-gradient(circle at 95% 48%, rgba(255, 194, 220, .30), transparent 30rem),
+        linear-gradient(150deg, rgba(255,255,255,.35), transparent 55%),
         var(--cream);
       font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
       line-height: 1.9;
@@ -86,8 +87,8 @@
       border-radius: 999px;
       padding: 14px 26px;
       color: #fff;
-      background: var(--rose);
-      box-shadow: 0 10px 25px rgba(163, 76, 92, .25);
+      background: linear-gradient(135deg, #e96f9c, #c94f82);
+      box-shadow: 0 10px 25px rgba(216, 95, 139, .32), inset 0 1px rgba(255,255,255,.35);
       cursor: pointer;
       transition: transform .2s, box-shadow .2s;
     }
@@ -99,6 +100,7 @@
     section { width: min(960px, calc(100% - 40px)); margin: 0 auto; padding: 90px 0; }
     .section-title { text-align: center; margin-bottom: 54px; }
     .section-title span { color: var(--gold); font-size: 12px; letter-spacing: .3em; }
+    .section-title h2::before, .section-title h2::after { content: "♡"; margin: 0 .45em; color: #efa2bf; font-size: .55em; vertical-align: middle; }
     h2 { margin: 6px 0 0; color: var(--rose-dark); font-size: clamp(30px, 5vw, 46px); font-weight: 500; }
 
     .photo-story { padding-top: 54px; }
@@ -116,16 +118,28 @@
       animation: cardIn .65s cubic-bezier(.2,.8,.2,1) both;
     }
     .story-card.active { display: block; }
+    .season-transition {
+      display: block;
+      margin: 0 auto 22px;
+      text-align: center;
+      color: var(--rose-dark);
+      font-size: clamp(27px, 6vw, 42px);
+      letter-spacing: .22em;
+      font-weight: 500;
+      opacity: 0;
+    }
+    .story-card.active .season-transition { animation: seasonIn 1.25s ease both; }
+    .season-transition small { display: block; margin-top: 3px; color: var(--gold); font-size: 11px; letter-spacing: .28em; font-weight: 400; }
     .photo-frame {
       position: relative;
       aspect-ratio: 4 / 5;
       max-height: 66svh;
       overflow: hidden;
-      border: 10px solid var(--paper);
+      border: 10px solid #fff9fc;
       border-bottom-width: 34px;
       border-radius: 5px;
       background: linear-gradient(145deg, #e8c8c5, #b47a83);
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow), 0 0 0 2px rgba(238,151,184,.16);
     }
     .story-card:nth-child(2) .photo-frame { background: linear-gradient(145deg, #ead8b9, #b98b67); }
     .story-card:nth-child(3) .photo-frame { background: linear-gradient(145deg, #d7cadf, #8d748f); }
@@ -190,16 +204,28 @@
 
     .letter-wrap { max-width: 720px; margin: auto; position: relative; }
     .letter {
-      background: var(--paper);
+      background: linear-gradient(145deg, #fffafd, #fff2f7);
       padding: clamp(30px, 7vw, 72px);
       border-radius: 4px;
       box-shadow: var(--shadow);
       transform: rotate(-.35deg);
       position: relative;
     }
-    .letter::before { content: ""; position: absolute; inset: 18px; border: 1px solid rgba(197, 155, 104, .24); pointer-events: none; }
+    .letter::before { content: "♡  ✦  ♡"; position: absolute; inset: 18px; border: 1px solid rgba(226, 126, 164, .26); color: rgba(216,95,139,.38); text-align: center; line-height: 18px; letter-spacing: .8em; pointer-events: none; }
     .letter p { margin: 0 0 1.5em; }
     .signature { text-align: right; color: var(--rose); font-size: 20px; margin-top: 34px; }
+    .signature small { color: var(--muted); font-size: 13px; letter-spacing: .08em; }
+    .replay-wrap { text-align: center; margin-top: 38px; }
+    .replay-button {
+      border: 1px solid rgba(163,76,92,.28);
+      border-radius: 999px;
+      padding: 12px 22px;
+      color: var(--rose);
+      background: rgba(255,250,246,.72);
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+    }
+    .replay-button:hover { transform: translateY(-2px); background: var(--paper); }
 
     .coupon {
       max-width: 680px;
@@ -223,7 +249,7 @@
     .music {
       position: fixed; right: 18px; top: 18px; z-index: 30;
       width: 44px; height: 44px; border-radius: 50%;
-      border: 1px solid rgba(163,76,92,.25); background: rgba(255,250,246,.85);
+      border: 1px solid rgba(216,95,139,.3); background: rgba(255,244,249,.9);
       color: var(--rose); cursor: pointer; backdrop-filter: blur(8px);
     }
     .butterflies {
@@ -267,7 +293,7 @@
       font-size: 20px;
       animation: note 1s ease-out infinite;
     }
-    .petal { position: fixed; top: -30px; z-index: 25; pointer-events: none; color: rgba(163,76,92,.45); animation: fall linear forwards; }
+    .petal { position: fixed; top: -30px; z-index: 25; pointer-events: none; color: rgba(225,91,143,.55); animation: fall linear forwards; }
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
     .reveal.visible { opacity: 1; transform: none; }
 
@@ -295,6 +321,10 @@
     }
     @keyframes note { to { transform: translateY(-16px); opacity: 0; } }
     @keyframes cardIn { from { opacity: 0; transform: translateY(22px) scale(.985); } }
+    @keyframes seasonIn {
+      0% { opacity: 0; transform: translateY(12px); letter-spacing: .35em; }
+      100% { opacity: 1; transform: none; letter-spacing: .22em; }
+    }
     @media (max-width: 720px) {
       section { padding: 68px 0; }
       .reasons { grid-template-columns: 1fr; }
@@ -325,7 +355,7 @@
   <header class="hero" id="top">
     <div class="cover">
       <p class="eyebrow">A LITTLE GIFT FOR YOU</p>
-      <h1>生日快乐，<span data-name>宝贝</span></h1>
+      <h1>生日快乐！<br><span data-name>QQ小宝宝</span></h1>
       <p class="subtitle">今天，我想把那些藏在日常里的喜欢，认真地说给你听。</p>
       <button class="primary" id="openButton">打开这封信&nbsp; ♡</button>
     </div>
@@ -337,25 +367,25 @@
       <div class="section-title"><span>OUR ALBUM</span><h2>一些想和你收藏的瞬间</h2></div>
       <p class="story-intro">轻轻点击照片，让回忆一张一张展开</p>
       <div class="story-deck" id="storyDeck">
-        <button class="story-card" type="button"><div class="photo-frame" data-number="01"><img src="photos/photo-1.jpg" alt="小猪" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是小猪<span class="story-hint">再点一下，去往下一张</span></p></button>
+        <button class="story-card" type="button"><span class="season-transition">夏<small>初见 · 故事开始</small></span><div class="photo-frame" data-number="01"><img src="photos/photo-1.jpg" alt="小猪" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是小猪<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="02"><img src="photos/photo-2.jpg" alt="小熊" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是小熊<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="03"><img src="photos/photo-3.jpg" alt="小脏和QQ小宝宝" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是小脏（和碎觉觉的QQ小宝宝嘻嘻嘻）<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="04"><img src="photos/photo-4.jpg" alt="过生日的QQ小宝宝" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是过生日的QQ小宝宝（小脏的花～）<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="05"><img src="photos/photo-5.jpg" alt="认真学习的QQ小宝宝" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是认真学习的QQ小宝宝<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="06"><img src="photos/photo-6.jpg" alt="害羞的QQ小宝宝" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是害羞的QQ小宝宝<span class="story-hint">再点一下，去往下一张</span></p></button>
-        <button class="story-card" type="button"><div class="photo-frame" data-number="07"><img src="photos/photo-7.jpg" alt="抱抱的QQ小宝宝" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是抱抱的QQ小宝宝<span class="story-hint">再点一下，去往下一张</span></p></button>
+        <button class="story-card" type="button"><span class="season-transition">秋<small>靠近 · 心意渐浓</small></span><div class="photo-frame" data-number="07"><img src="photos/photo-7.jpg" alt="抱抱的QQ小宝宝" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是抱抱的QQ小宝宝<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="08"><img src="photos/photo-8.jpg" alt="肆无忌惮的QQ小宝宝" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是肆无忌惮的QQ小宝宝<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="09"><img src="photos/photo-9.jpg" alt="看电影的QQ小宝宝" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是看电影的QQ小宝宝<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="10"><img src="photos/photo-10.jpg" alt="投降的QQ小宝宝" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是投降的QQ小宝宝<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="11"><img src="photos/photo-11.jpg" alt="大波浪小宝宝" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是大波浪小宝宝<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="12"><img src="photos/photo-12.jpg" alt="看小猫的QQ小宝宝" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是看小猫的QQ小宝宝<span class="story-hint">再点一下，去往下一张</span></p></button>
-        <button class="story-card" type="button"><div class="photo-frame" data-number="13"><img src="photos/photo-13.jpg" alt="切水果的QQ小宝宝" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是切水果的QQ小宝宝<span class="story-hint">再点一下，去往下一张</span></p></button>
+        <button class="story-card" type="button"><span class="season-transition">冬<small>相拥 · 温暖彼此</small></span><div class="photo-frame" data-number="13"><img src="photos/photo-13.jpg" alt="切水果的QQ小宝宝" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是切水果的QQ小宝宝<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="14"><img src="photos/photo-14.jpg" alt="官宣" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是官宣<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="15"><img src="photos/photo-15.jpg" alt="第一次给小宝宝的礼物" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是第一次给小宝宝的礼物<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="16"><img src="photos/photo-16.jpg" alt="给小宝宝跑的奖牌" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是给小宝宝跑的奖牌<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="17"><img src="photos/photo-17.jpg" alt="送小宝宝的手链" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是送小宝宝的手链（已战损）<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="18"><img src="photos/photo-18.jpg" alt="给小宝宝的回礼" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是给小宝宝的回礼哈哈哈<span class="story-hint">再点一下，去往下一张</span></p></button>
-        <button class="story-card" type="button"><div class="photo-frame" data-number="19"><img src="photos/photo-19.jpg" alt="给小宝宝带的特产" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是给小宝宝带的特产<span class="story-hint">再点一下，去往下一张</span></p></button>
+        <button class="story-card" type="button"><span class="season-transition">春<small>相伴 · 奔赴以后</small></span><div class="photo-frame" data-number="19"><img src="photos/photo-19.jpg" alt="给小宝宝带的特产" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是给小宝宝带的特产<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="20"><img src="photos/photo-20.jpg" alt="给小宝宝的靠背" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是给小宝宝的靠背<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="21"><img src="photos/photo-21.jpg" alt="儿童节礼物" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是儿童节礼物<span class="story-hint">再点一下，去往下一张</span></p></button>
         <button class="story-card" type="button"><div class="photo-frame" data-number="22"><img src="photos/photo-22.jpg" alt="爸爸妈妈送小宝宝的礼物" onerror="this.style.display='none';this.parentElement.classList.add('missing')"></div><p class="story-caption">这是回家爸爸妈妈送小宝宝嘟<span class="story-hint">再点一下，去往下一张</span></p></button>
@@ -375,8 +405,9 @@
           <p>来年再见的时候已经是春天了，离别没有削弱我们的感情，反而增加了浓度。我们更爱对方了。这个春天小宝宝帮我过了生日，那是我第一次比较正式的生日，我收到了小宝宝的礼物，这也是第一份。那是我第一次对生日有了不一样的感觉。我们依旧每日见面，每天都待到很晚。还解锁了新的地方，绍兴和上海。我们会觉得时间太慢，假期总是很慢到来。又会觉得时间太快，好像什么都感觉，就又要回校了。但这个春天，是我经历过的最幸福的春天，因为有你，我最爱的小宝宝。</p>
           <p>今年的夏天，没有酸涩，没有曲折。是完全的热烈。我们保持着见面的频率，在假期你还陪我回了家，见了我的爸爸妈妈。那一周，我们去了盐城，苏州和南京。我们真的没有一时一刻是分开的，你还尝了我做的饭，虽然不太好吃，但也是经历。我们好像进入了桃花源，没有任何压力，只需要享受生活，享受时间。直到现在，我也依然想要回去，想要一直和你在那段时间里。</p>
           <p>又到了现在，距离我们过“生日”又过两周呀，小宝宝每天都很辛苦，但也别忘了过生日呀，生日快乐小宝宝！我们还会有很多很多个美好瞬间嘟🥰🥰🥰</p>
-          <div class="signature">永远站在你这边的人<br><span data-from>你的名字</span></div>
+          <div class="signature">永远爱你的小脏<br><small>2026年9月6日</small></div>
         </article>
+        <div class="replay-wrap"><button class="replay-button" id="replayButton" type="button">从第一张照片重新看一遍&nbsp; ↺</button></div>
       </div>
     </section>
 
@@ -391,9 +422,9 @@
   <script>
     // ===== 只需修改这里，就能把网站变成你们专属的礼物 =====
     const CONFIG = {
-      herName: "宝贝",
-      yourName: "你的名字",
-      date: "今天",
+      herName: "QQ小宝宝",
+      yourName: "小脏",
+      date: "2026年9月6日",
       secret: "遇见你，是我收到过最好的礼物。",
       musicFile: "music.m4a" // 背景音乐：唱给特别的人～
     };
@@ -404,6 +435,7 @@
 
     const audio = new Audio(CONFIG.musicFile);
     audio.loop = true;
+    audio.volume = .58;
     const musicButton = document.querySelector("#musicButton");
     let musicPlaying = false;
 
@@ -444,10 +476,13 @@
     }, { threshold: .18 });
     letterObserver.observe(letterSection);
 
-    document.querySelector("#openButton").addEventListener("click", () => {
+    document.querySelector("#openButton").addEventListener("click", async () => {
       document.body.classList.add("opened");
       storyCards[0].classList.add("active");
       document.querySelector("#photoStory").scrollIntoView({ behavior: "smooth" });
+      if (!musicPlaying) {
+        try { await audio.play(); musicPlaying = true; musicButton.textContent = "Ⅱ"; } catch {}
+      }
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         for (let i = 0; i < 18; i++) setTimeout(createPetal, i * 90);
       }
@@ -479,6 +514,16 @@
         setTimeout(() => letterSection.scrollIntoView({ behavior: "smooth", block: "start" }), 350);
       }
     }));
+
+    document.querySelector("#replayButton").addEventListener("click", () => {
+      storyDeck.classList.remove("completed");
+      storyCards.forEach(item => { item.classList.remove("active", "caption-visible"); item.tabIndex = 0; });
+      storyIndex = 0;
+      captionVisible = false;
+      storyCards[0].classList.add("active");
+      storyProgress.textContent = `照片 1 / ${storyCards.length} · 点击照片显示文字`;
+      document.querySelector("#photoStory").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
 
     function createPetal() {
       const petal = document.createElement("span");
